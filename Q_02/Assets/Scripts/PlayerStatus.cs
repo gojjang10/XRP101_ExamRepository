@@ -4,19 +4,20 @@ using UnityEngine;
 
 public class PlayerStatus : MonoBehaviour
 {
+    private float _moveSpeed;
     public float MoveSpeed
     {
-        get => MoveSpeed;
-        private set => MoveSpeed = value;
+        get => _moveSpeed;
+        private set => _moveSpeed = value;
     }
 
-    private void Awake()
+    private void Start()
     {
         Init();
     }
 
     private void Init()
     {
-        MoveSpeed = 5f;
+        _moveSpeed = 5f;
     }
 }

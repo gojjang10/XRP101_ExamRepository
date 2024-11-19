@@ -15,7 +15,18 @@ public class GameManager : SingletonBehaviour<GameManager>
 
     public void Pause()
     {
-        Time.timeScale = 0f;
+        if(Time.timeScale == 1)
+        {
+            Time.timeScale = 0f;
+            Debug.Log($"pause {Time.timeScale}");
+        }
+
+        else
+        {
+            Time.timeScale = 1f;
+            Debug.Log($"pause off {Time.timeScale}");
+        }
+
     }
 
     public void LoadScene(int buildIndex)

@@ -18,4 +18,15 @@
 제시된 프로젝트에서 발생하는 `문제들을 모두 서술`하고 올바르게 동작하도록 `소스코드를 개선`하시오.
 
 ## 답안
-- 
+- Start 버튼이 안눌리는 버그 발견
+EventSystem을 추가해서 해당 버그 해결
+
+- 팝업창을 눌렀을때도 큐브가 회전하는 버그 발견
+GameManager에서 Pause()함수를 사용했을때 timeScale을 0으로 만들어서 일시정지를 구현한 상태인데 timeScale을 0으로 설정해도 Update함수는 timeScale의 영향을 받지 않기에 계속 큐브를 회전시킨다. 때문에 회전에 time.deltaTime을 사용해서 영향을 받게끔 하여 구현
+
+- 팝업창이 2초뒤에 사라지지 않는 버그 발견
+_wait에서 선언한 코루틴이 WaitForSeconds를 사용하는데 이를 사용하게되면 timeScale에 영향을 받아서 WaitForSecondsRealtime를 사용해서 영향을 받지 않게끔 하여 구현
+
+- GameManager가 여러개 생성되는버그, 씬을 전환하게되면 Missing이 뜨는 버그 발견
+singletonBehaviour 클래스 속 싱글톤 객체의 예외처리를 진행하여 여러개가 중복생성되지 않게끔 변경
+main씬과 game씬에서 각각 씬을 전환하는 버튼에 원래 참조되어있는 게임매니저 대신 새로운 스크립트 GameSceanOn 스크립트를 작성해서 해당 스크립트안에 싱글톤의 기능을 활용해서 씬 전환 기능을 넣어서 구현

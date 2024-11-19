@@ -12,7 +12,10 @@ public class SingletonBehaviour<T> : MonoBehaviour where T : MonoBehaviour
             if (_instance == null)
             {
                 _instance = FindObjectOfType<T>();
-                DontDestroyOnLoad(_instance.gameObject);
+                if( _instance != null )
+                {
+                    DontDestroyOnLoad(_instance.gameObject);
+                }
             }
             return _instance;
         }
@@ -20,6 +23,11 @@ public class SingletonBehaviour<T> : MonoBehaviour where T : MonoBehaviour
 
     protected void SingletonInit()
     {
+        if(_instance != null)
+        {
+            Destroy(gameObject);
+        }
+
         _instance = GetComponent<T>();
         DontDestroyOnLoad(gameObject);
     }

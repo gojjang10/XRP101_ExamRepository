@@ -4,11 +4,11 @@ using UnityEngine;
 
 public abstract class PooledBehaviour : MonoBehaviour
 {
-    public Stack<PooledBehaviour> Pool { get; set; }
+    public CustomObjectPool Pool { get; set; }
 
     public virtual void ReturnPool()
     {
-        Pool.Push(this);
+        Pool.ReturnPool(this);
         gameObject.SetActive(false);
     }
 

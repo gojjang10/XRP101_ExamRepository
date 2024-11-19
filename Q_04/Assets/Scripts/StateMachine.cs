@@ -10,8 +10,10 @@ public enum StateType
 public class StateMachine
 {
     private Dictionary<StateType, PlayerState> _stateContainer;
-    public StateType CurrentType { get; private set; }
-    private PlayerState CurrentState => _stateContainer[CurrentType];
+
+    private StateType _currentType;
+    public StateType CurrentType { get { return _currentType; } set { _currentType = value; } }
+    public PlayerState CurrentState => _stateContainer[_currentType];
 
     public StateMachine(params PlayerState[] states)
     {
@@ -37,6 +39,8 @@ public class StateMachine
 
     public void ChangeState(StateType state)
     {
+        if(CurrentType == state) return;
+
         CurrentState.Exit();
         CurrentType = state;
         CurrentState.Enter();

@@ -8,6 +8,7 @@ public class StateAttack : PlayerState
 {
     private float _delay = 2;
     private WaitForSeconds _wait;
+    Coroutine _coroutine;
     
     public StateAttack(PlayerController controller) : base(controller)
     {
@@ -22,7 +23,10 @@ public class StateAttack : PlayerState
 
     public override void Enter()
     {
-        Controller.StartCoroutine(DelayRoutine(Attack));
+        if(_coroutine == null)
+        {
+            _coroutine = Controller.StartCoroutine(DelayRoutine());
+        }
     }
 
     public override void OnUpdate()
@@ -32,8 +36,18 @@ public class StateAttack : PlayerState
 
     public override void Exit()
     {
-        Machine.ChangeState(StateType.Idle);
+        if (_coroutine != null)
+        {
+            Controller.StopCoroutine(_coroutine);
+            _coroutine = null;
+        }
+
+        if (Machine.CurrentType != StateType.Idle)
+        {
+            Machine.ChangeState(StateType.Idle);
+        }
     }
+    
 
     private void Attack()
     {
@@ -46,11 +60,14 @@ public class StateAttack : PlayerState
         foreach (Collider col in cols)
         {
             damagable = col.GetComponent<IDamagable>();
-            damagable.TakeHit(Controller.AttackValue);
+            if (damagable != null)
+            {
+                damagable.TakeHit(Controller.AttackValue);
+            }
         }
     }
 
-    public IEnumerator DelayRoutine(Action action)
+    public IEnumerator DelayRoutine()
     {
         yield return _wait;
 

@@ -8,6 +8,7 @@ public abstract class PlayerState
     {
         Controller = controller;
         Init();
+        Enter();
     }
 
     public abstract void Init();

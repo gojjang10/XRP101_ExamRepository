@@ -22,5 +22,6 @@ public class PlayerController : MonoBehaviour
     private void Init()
     {
         _state = new StateMachine(new StateIdle(this), new StateAttack(this));
+        Debug.Log("생성완료");
     }
 }

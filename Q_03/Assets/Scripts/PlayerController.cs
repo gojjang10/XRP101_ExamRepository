@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     [field: Range(0, 100)]
     public int Hp { get; private set; }
 
-    private AudioSource _audio;
+    [SerializeField] private AudioSource _audio;
 
     private void Awake()
     {
@@ -33,6 +33,17 @@ public class PlayerController : MonoBehaviour
     public void Die()
     {
         _audio.Play();
+
+        GetComponent<Collider>().enabled = false;
+        GetComponent<Renderer>().enabled = false;
+
+        StartCoroutine(WaitingDie());
+    }
+
+    private IEnumerator WaitingDie()
+    {
+        yield return new WaitForSeconds(_audio.clip.length);
+
         gameObject.SetActive(false);
     }
 }

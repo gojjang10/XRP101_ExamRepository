@@ -17,7 +17,7 @@ public class TurretController : MonoBehaviour
         Init();
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))
         {
